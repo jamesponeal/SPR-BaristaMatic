@@ -4,4 +4,5 @@ require_relative 'barista_controller'
 barista = BaristaController.new
 view = BaristaView.new
 view.print_title
-barista.start
+view.print_inventory(barista.inventory)
+

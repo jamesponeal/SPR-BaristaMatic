@@ -4,33 +4,32 @@ class BaristaController
 
   def initialize
     @inventory = {
-      "coffee" => 10,
-      "decaf coffee" => 10,
-      "sugar" => 10,
-      "cream" => 10,
-      "steamed milk" => 10,
-      "foamed milk" => 10,
-      "espresso" => 10,
-      "cocoa" => 10,
-      "whipped cream" => 10
+      "Coffee" => 10,
+      "Decaf Coffee" => 10,
+      "Sugar" => 10,
+      "Cream" => 10,
+      "Steamed Milk" => 10,
+      "Foamed Milk" => 10,
+      "Espresso" => 10,
+      "Cocoa" => 10,
+      "Whipped Cream" => 10
     }
 
     @cost = {
-      "coffee" => 0.75,
-      "decaf coffee" => 0.75,
-      "sugar" => 0.25,
-      "cream" => 0.25,
-      "steamed milk" => 0.35,
-      "foamed milk" => 0.35,
-      "espresso" => 1.10,
-      "cocoa" => 0.90,
-      "whipped cream" => 1.00
+      "Coffee" => 0.75,
+      "Decaf Coffee" => 0.75,
+      "Sugar" => 0.25,
+      "Cream" => 0.25,
+      "Steamed Milk" => 0.35,
+      "Foamed Milk" => 0.35,
+      "Espresso" => 1.10,
+      "Cocoa" => 0.90,
+      "Whipped Cream" => 1.00
     }
   end
 
-  def start
-    puts "Hello!"
-    puts "coffee costs #{@cost["coffee"]}"
+  def reduce_inventory(item, qty)
+    inventory[item] -= qty
   end
 
 end
