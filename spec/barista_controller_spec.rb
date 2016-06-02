@@ -34,6 +34,17 @@ describe "BaristaController" do
     end
   end
 
+  describe "enough_inventory?" do
+    it "returns true if there is enough inventory to make the requested item" do
+      expect(barista.enough_inventory?("Coffee")).to be true
+    end
+
+    it "returns false if there is not enough inventory to make requested item" do
+      barista.reduce_inventory("Coffee", 9)
+      expect(barista.enough_inventory?("Coffee")).to be false
+    end
+  end
+
 end
 
 

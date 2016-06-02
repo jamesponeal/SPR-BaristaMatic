@@ -47,5 +47,12 @@ class BaristaController
     total.round(2)
   end
 
+  def enough_inventory?(item)
+    recipes[item].each do |ingredient|
+      return false if inventory[ingredient[0]] < ingredient[1]
+    end
+    return true
+  end
+
 end
 
