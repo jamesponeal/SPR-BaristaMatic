@@ -1,6 +1,6 @@
 class BaristaController
 
-  attr_accessor :inventory, :cost
+  attr_accessor :inventory, :costs, :recipes
 
   def initialize
     @inventory = {
@@ -14,22 +14,37 @@ class BaristaController
       "Cocoa" => 10,
       "Whipped Cream" => 10
     }
-
-    @cost = {
+    @costs = {
       "Coffee" => 0.75,
       "Decaf Coffee" => 0.75,
       "Sugar" => 0.25,
       "Cream" => 0.25,
       "Steamed Milk" => 0.35,
       "Foamed Milk" => 0.35,
-      "Espresso" => 1.10,
-      "Cocoa" => 0.90,
-      "Whipped Cream" => 1.00
+      "Espresso" => 1.1,
+      "Cocoa" => 0.9,
+      "Whipped Cream" => 1
+    }
+    @recipes = {
+      "Coffee" => [["Coffee", 3], ["Sugar", 1], ["Cream", 1]],
+      "Decaf Coffee" => [["Decaf Coffee", 3], ["Sugar", 1], ["Cream", 1]],
+      "Caffe Latte" => [["Espresso", 2], ["Steamed Milk", 1]],
+      "Caffe Americano" => [["Espresso", 3]],
+      "Caffe Mocha" => [["Espresso", 1], ["Cocoa", 1], ["Steamed Milk", 1], ["Whipped Cream", 1]],
+      "Cappuccino" => [["Espresso", 2], ["Steamed Milk", 1], ["Foamed Milk", 1]]
     }
   end
 
   def reduce_inventory(item, qty)
     inventory[item] -= qty
+  end
+
+  def get_cost(item)
+    total = 0
+    recipes[item].each do |ingredient|
+      total += (costs[ingredient[0]] * ingredient[1])
+    end
+    total.round(2)
   end
 
 end
