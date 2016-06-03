@@ -59,6 +59,26 @@ describe "BaristaController" do
     end
   end
 
+  describe "get_drink_name" do
+    it "returns the name of drink given a string number" do
+      expect(barista.get_drink_name("1")).to eq("Coffee")
+    end
+
+    it "returns the name of drink given a string number" do
+      expect(barista.get_drink_name("6")).to eq("Cappuccino")
+    end
+  end
+
+  describe "valid_choice?" do
+    it "returns true if the choice input is valid" do
+      expect(barista.valid_choice?("Q")).to be true
+    end
+
+    it "returns false if the choice input is invalid" do
+      expect(barista.valid_choice?("7")).to be false
+    end
+  end
+
 end
 
 
