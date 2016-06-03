@@ -46,7 +46,6 @@ class BaristaView
   def display_invalid_input(choice)
     wait_with_line(0.1)
     puts "Invalid selection: #{choice}"
-    wait_with_line(0.1)
   end
 
   def display_drink_selection(drink_name)

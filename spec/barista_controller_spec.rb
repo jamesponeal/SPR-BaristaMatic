@@ -79,6 +79,15 @@ describe "BaristaController" do
     end
   end
 
+  describe "serve_drink" do
+    it "reduces inventory for each ingredient in a drink" do
+      barista.serve_drink("Coffee")
+      expect(barista.inventory["Coffee"]).to eq(7)
+      expect(barista.inventory["Sugar"]).to eq(9)
+      expect(barista.inventory["Cream"]).to eq(9)
+    end
+  end
+
 end
 
 

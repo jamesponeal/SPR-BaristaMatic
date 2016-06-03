@@ -2,7 +2,7 @@ require_relative 'barista_view'
 
 class BaristaController
   attr_reader :costs, :recipes, :view
-  attr_accessor :inventory, :running
+  attr_accessor :inventory
 
   def initialize
     @inventory = {
@@ -35,7 +35,6 @@ class BaristaController
       "Caffe Mocha" => [["Espresso", 1], ["Cocoa", 1], ["Steamed Milk", 1], ["Whipped Cream", 1]],
       "Cappuccino" => [["Espresso", 2], ["Steamed Milk", 1], ["Foamed Milk", 1]]
     }
-    @running = true
     @view = BaristaView.new
   end
 
@@ -82,7 +81,6 @@ class BaristaController
   end
 
   def serve_drink(drink_name)
-    view.display_drink_selection(drink_name)
     recipes[drink_name].each do |ingredient|
       reduce_inventory(ingredient[0], ingredient[1])
     end
@@ -96,8 +94,10 @@ class BaristaController
       view.display_inventory_replenish
       replenish_inventory
     elsif ["1", "2", "3", "4", "5", "6"].include?(choice)
-      if enough_inventory?(get_drink_name(choice))
-        serve_drink(get_drink_name(choice))
+      drink_name = get_drink_name(choice)
+      if enough_inventory?(drink_name)
+        view.display_drink_selection(drink_name)
+        serve_drink(drink_name)
       else
         view.display_out_of_stock(get_drink_name(choice))
       end
@@ -124,7 +124,7 @@ class BaristaController
     view.print_title
     view.print_inventory(inventory)
     view.print_menu(get_menu)
-    while running
+    while true
       choice = get_user_choice
       evaluate_choice(choice)
       view.print_inventory(inventory)
