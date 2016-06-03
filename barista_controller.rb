@@ -43,16 +43,16 @@ class BaristaController
     inventory[item] -= qty
   end
 
-  def get_cost(item)
+  def get_cost(drink_name)
     total = 0
-    recipes[item].each do |ingredient|
+    recipes[drink_name].each do |ingredient|
       total += (costs[ingredient[0]] * ingredient[1])
     end
     ("%.2f" % total)
   end
 
-  def enough_inventory?(item)
-    recipes[item].each do |ingredient|
+  def enough_inventory?(drink_name)
+    recipes[drink_name].each do |ingredient|
       return false if inventory[ingredient[0]] < ingredient[1]
     end
     return true
@@ -69,22 +69,38 @@ class BaristaController
   def get_menu
     menu = []
     i = 0
-    recipes.each do |item, ingredients|
-      menu[i] = "#{i+1},#{item},$#{get_cost(item)},#{enough_inventory?(item)}"
+    recipes.each do |drink_name, ingredients|
+      menu[i] = "#{i+1},#{drink_name},$#{get_cost(drink_name)},#{enough_inventory?(drink_name)}"
       i += 1
     end
     menu
   end
 
+  def get_drink_name(number)
+    drink_names = recipes.keys
+    drink_names[number.to_i-1]
+  end
+
+  def serve_drink(drink_name)
+    view.display_drink_selection(drink_name)
+    recipes[drink_name].each do |ingredient|
+      reduce_inventory(ingredient[0], ingredient[1])
+    end
+  end
+
   def evaluate_choice(choice)
     if choice == "Q" || choice == "q"
-      # quit
+      view.goodbye_message
+      exit
     elsif choice == "R" || choice == "r"
-      # restock
-    elsif (1..6).include?(choice.to_i)
-      # make drink
-    else
-
+      view.display_inventory_replenish
+      replenish_inventory
+    elsif ["1", "2", "3", "4", "5", "6"].include?(choice)
+      if enough_inventory?(get_drink_name(choice))
+        serve_drink(get_drink_name(choice))
+      else
+        view.display_out_of_stock(get_drink_name(choice))
+      end
     end
   end
 
@@ -92,20 +108,25 @@ class BaristaController
     ["1", "2", "3", "4", "5", "6", "Q", "q", "R", "r"].include?(choice)
   end
 
+  def get_user_choice
+    input_validity = false
+    until input_validity
+      choice = view.ask_for_user_input
+      input_validity = valid_choice?(choice)
+      if input_validity == false
+        view.display_invalid_input(choice)
+      end
+    end
+    choice
+  end
+
   def run_barista
     view.print_title
     view.print_inventory(inventory)
     view.print_menu(get_menu)
     while running
-      input_valid = false
-      until input_valid == true
-        choice = view.ask_for_user_input
-        input_valid = valid_choice?(choice)
-        if input_valid == false
-          view.display_invalid_input(choice)
-        end
-      end
-
+      choice = get_user_choice
+      evaluate_choice(choice)
       view.print_inventory(inventory)
       view.print_menu(get_menu)
     end
