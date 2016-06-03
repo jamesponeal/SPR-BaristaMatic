@@ -29,6 +29,9 @@ class BaristaView
     wait_with_line(0.1)
   end
 
+  def print_menu(menu)
+
+  end
 
   def wait_with_line(seconds)
     sleep(seconds)

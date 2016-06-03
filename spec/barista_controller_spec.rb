@@ -18,19 +18,19 @@ describe "BaristaController" do
 
   describe "get_cost" do
     it "returns the cost of a specified menu item" do
-      expect(barista.get_cost("Coffee")).to eq(2.75)
+      expect(barista.get_cost("Coffee")).to eq('2.75')
     end
 
     it "returns the cost of a specified menu item" do
-      expect(barista.get_cost("Caffe Latte")).to eq(2.55)
+      expect(barista.get_cost("Caffe Latte")).to eq('2.55')
     end
 
     it "returns the cost of a specified menu item" do
-      expect(barista.get_cost("Caffe Americano")).to eq(3.3)
+      expect(barista.get_cost("Caffe Americano")).to eq('3.30')
     end
 
     it "returns the cost of a specified menu item" do
-      expect(barista.get_cost("Cappuccino")).to eq(2.9)
+      expect(barista.get_cost("Cappuccino")).to eq('2.90')
     end
   end
 
@@ -44,6 +44,20 @@ describe "BaristaController" do
       expect(barista.enough_inventory?("Coffee")).to be false
     end
   end
+
+  describe "replenish_inventory" do
+    it "returns all inventory to the starting value" do
+      barista.reduce_inventory("Coffee", 1)
+      barista.replenish_inventory
+      expect(barista.inventory["Coffee"]).to eq(10)
+    end
+  end
+
+  # describe "build_menu" do
+  #   it "returns an array containing menu of available drinks" do
+  #     expect(barista.build_menu).to eq(["1,Coffee,$2.75,true", "2,Decaf Coffee,$2.75,true", "3,Caffe Latte,$2.55,true", "4,Caffe Americano,$3.3,true", "5,Caffe Mocha,$3.35,true", "6,Cappuccino,$2.9,true"])
+  #   end
+  # end
 
 end
 

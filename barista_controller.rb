@@ -44,7 +44,7 @@ class BaristaController
     recipes[item].each do |ingredient|
       total += (costs[ingredient[0]] * ingredient[1])
     end
-    total.round(2)
+    ("%.2f" % total)
   end
 
   def enough_inventory?(item)
@@ -52,6 +52,24 @@ class BaristaController
       return false if inventory[ingredient[0]] < ingredient[1]
     end
     return true
+  end
+
+  def replenish_inventory
+    inventory.each do |item,qty|
+      if qty < 10
+        inventory[item] = 10
+      end
+    end
+  end
+
+  def build_menu
+    menu = []
+    i = 0
+    recipes.each do |item, ingredients|
+      menu[i] = "#{i+1},#{item},$#{get_cost(item)},#{enough_inventory?(item)}"
+      i += 1
+    end
+    menu
   end
 
 end
