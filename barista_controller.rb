@@ -1,6 +1,8 @@
-class BaristaController
+require_relative 'barista_view'
 
-  attr_accessor :inventory, :costs, :recipes
+class BaristaController
+  attr_reader :costs, :recipes, :view
+  attr_accessor :inventory, :running
 
   def initialize
     @inventory = {
@@ -33,6 +35,8 @@ class BaristaController
       "Caffe Mocha" => [["Espresso", 1], ["Cocoa", 1], ["Steamed Milk", 1], ["Whipped Cream", 1]],
       "Cappuccino" => [["Espresso", 2], ["Steamed Milk", 1], ["Foamed Milk", 1]]
     }
+    @running = true
+    @view = BaristaView.new
   end
 
   def reduce_inventory(item, qty)
@@ -62,7 +66,7 @@ class BaristaController
     end
   end
 
-  def build_menu
+  def get_menu
     menu = []
     i = 0
     recipes.each do |item, ingredients|
@@ -70,6 +74,41 @@ class BaristaController
       i += 1
     end
     menu
+  end
+
+  def evaluate_choice(choice)
+    if choice == "Q" || choice == "q"
+      # quit
+    elsif choice == "R" || choice == "r"
+      # restock
+    elsif (1..6).include?(choice.to_i)
+      # make drink
+    else
+
+    end
+  end
+
+  def valid_choice?(choice)
+    ["1", "2", "3", "4", "5", "6", "Q", "q", "R", "r"].include?(choice)
+  end
+
+  def run_barista
+    view.print_title
+    view.print_inventory(inventory)
+    view.print_menu(get_menu)
+    while running
+      input_valid = false
+      until input_valid == true
+        choice = view.ask_for_user_input
+        input_valid = valid_choice?(choice)
+        if input_valid == false
+          view.display_invalid_input(choice)
+        end
+      end
+
+      view.print_inventory(inventory)
+      view.print_menu(get_menu)
+    end
   end
 
 end

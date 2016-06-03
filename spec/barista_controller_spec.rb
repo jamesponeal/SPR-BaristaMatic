@@ -53,11 +53,11 @@ describe "BaristaController" do
     end
   end
 
-  # describe "build_menu" do
-  #   it "returns an array containing menu of available drinks" do
-  #     expect(barista.build_menu).to eq(["1,Coffee,$2.75,true", "2,Decaf Coffee,$2.75,true", "3,Caffe Latte,$2.55,true", "4,Caffe Americano,$3.3,true", "5,Caffe Mocha,$3.35,true", "6,Cappuccino,$2.9,true"])
-  #   end
-  # end
+  describe "get_menu" do
+    it "returns an array containing menu of available drinks" do
+      expect(barista.get_menu).to eq(["1,Coffee,$2.75,true", "2,Decaf Coffee,$2.75,true", "3,Caffe Latte,$2.55,true", "4,Caffe Americano,$3.30,true", "5,Caffe Mocha,$3.35,true", "6,Cappuccino,$2.90,true"])
+    end
+  end
 
 end
 
