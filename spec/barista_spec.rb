@@ -1,8 +1,8 @@
-require_relative '../barista_controller'
+require_relative '../barista_mc'
 
-describe "BaristaController" do
+describe "BaristaMatic" do
 
-  let!(:barista) {BaristaController.new}
+  let!(:barista) {BaristaMatic.new}
 
   describe "reduce_inventory" do
     it "reduces inventory by the specified amount" do
@@ -55,7 +55,7 @@ describe "BaristaController" do
 
   describe "get_menu" do
     it "returns an array containing menu of available drinks" do
-      expect(barista.get_menu).to eq(["1,Coffee,$2.75,true", "2,Decaf Coffee,$2.75,true", "3,Caffe Latte,$2.55,true", "4,Caffe Americano,$3.30,true", "5,Caffe Mocha,$3.35,true", "6,Cappuccino,$2.90,true"])
+      expect(barista.get_menu).to eq(["1,Coffee,$2.75,\e[32mtrue\e[0m", "2,Decaf Coffee,$2.75,\e[32mtrue\e[0m", "3,Caffe Latte,$2.55,\e[32mtrue\e[0m", "4,Caffe Americano,$3.30,\e[32mtrue\e[0m", "5,Caffe Mocha,$3.35,\e[32mtrue\e[0m", "6,Cappuccino,$2.90,\e[32mtrue\e[0m"])
     end
   end
 
@@ -79,9 +79,9 @@ describe "BaristaController" do
     end
   end
 
-  describe "serve_drink" do
+  describe "make_drink" do
     it "reduces inventory for each ingredient in a drink" do
-      barista.serve_drink("Coffee")
+      barista.make_drink("Coffee")
       expect(barista.inventory["Coffee"]).to eq(7)
       expect(barista.inventory["Sugar"]).to eq(9)
       expect(barista.inventory["Cream"]).to eq(9)

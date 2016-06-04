@@ -1,4 +1,5 @@
-require_relative 'barista_controller'
+require_relative 'barista_mc'
 
-barista = BaristaController.new
+barista = BaristaMatic.new
 barista.run_barista
+

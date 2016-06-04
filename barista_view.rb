@@ -1,17 +1,17 @@
 class BaristaView
 
   def print_title
-    sleep(0.2)
+    sleep(0.1)
     puts "~-"*15
-    wait_with_line(0.2)
+    wait_with_line(0.1)
     puts "           Welcome to"
-    wait_with_line(0.2)
-    puts "          \e[32;1mBaristaMatic\e[0m"
-    wait_with_line(0.2)
+    wait_with_line(0.1)
+    puts "          \e[34;1mBaristaMatic\e[0m"
+    wait_with_line(0.1)
     puts "     by SPR Coffee Services"
-    wait_with_line(0.2)
+    wait_with_line(0.1)
     puts "~-"*15
-    sleep(0.2)
+    sleep(0.5)
   end
 
   def print_inventory(inventory)
@@ -50,13 +50,13 @@ class BaristaView
 
   def display_drink_selection(drink_name)
     wait_with_line(0.1)
-    puts "Dispensing: #{drink_name}"
+    puts "Dispensing: \e[36m#{drink_name}\e[0m"
     wait_with_line(0.1)
   end
 
   def display_out_of_stock(drink_name)
     wait_with_line(0.1)
-    puts "Out of stock: #{drink_name}"
+    puts "Out of stock: \e[31m#{drink_name}\e[0m"
     wait_with_line(0.1)
   end
 
@@ -72,7 +72,7 @@ class BaristaView
     wait_with_line(0.1)
     puts "     Thank you for choosing"
     wait_with_line(0.1)
-    puts "          \e[32;1mBaristaMatic\e[0m"
+    puts "          \e[34;1mBaristaMatic\e[0m"
     wait_with_line(0.1)
     puts "     by SPR Coffee Services"
     wait_with_line(0.1)
