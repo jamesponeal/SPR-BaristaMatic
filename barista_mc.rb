@@ -1,6 +1,6 @@
 require_relative 'barista_view'
 
-class BaristaController
+class BaristaMatic
   attr_reader :costs, :recipes, :view
   attr_accessor :inventory
 
@@ -59,18 +59,18 @@ class BaristaController
 
   def replenish_inventory
     inventory.each do |item,qty|
-      if qty < 10
-        inventory[item] = 10
-      end
+      inventory[item] = 10
     end
   end
 
   def get_menu
     menu = []
-    i = 0
-    recipes.each do |drink_name, ingredients|
-      menu[i] = "#{i+1},#{drink_name},$#{get_cost(drink_name)},#{enough_inventory?(drink_name)}"
-      i += 1
+    drink_names = recipes.keys
+    for i in 0..(drink_names.length-1)
+      menu[i] = "#{i+1},#{drink_names[i]},$#{get_cost(drink_names[i])}"
+      inv = "\e[32mtrue\e[0m" if enough_inventory?(drink_names[i]) == true
+      inv = "\e[31mfalse\e[0m" if enough_inventory?(drink_names[i]) == false
+      menu[i] << ",#{inv}"
     end
     menu
   end
@@ -80,7 +80,7 @@ class BaristaController
     drink_names[number.to_i-1]
   end
 
-  def serve_drink(drink_name)
+  def make_drink(drink_name)
     recipes[drink_name].each do |ingredient|
       reduce_inventory(ingredient[0], ingredient[1])
     end
@@ -97,7 +97,7 @@ class BaristaController
       drink_name = get_drink_name(choice)
       if enough_inventory?(drink_name)
         view.display_drink_selection(drink_name)
-        serve_drink(drink_name)
+        make_drink(drink_name)
       else
         view.display_out_of_stock(get_drink_name(choice))
       end
@@ -113,9 +113,7 @@ class BaristaController
     until input_validity
       choice = view.ask_for_user_input
       input_validity = valid_choice?(choice)
-      if input_validity == false
-        view.display_invalid_input(choice)
-      end
+      view.display_invalid_input(choice) if input_validity == false
     end
     choice
   end
