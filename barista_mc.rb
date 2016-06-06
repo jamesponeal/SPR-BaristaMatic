@@ -67,10 +67,7 @@ class BaristaMatic
     menu = []
     drink_names = recipes.keys
     for i in 0..(drink_names.length-1)
-      menu[i] = "#{i+1},#{drink_names[i]},$#{get_cost(drink_names[i])}"
-      inv = "\e[32mtrue\e[0m" if enough_inventory?(drink_names[i]) == true
-      inv = "\e[31mfalse\e[0m" if enough_inventory?(drink_names[i]) == false
-      menu[i] << ",#{inv}"
+      menu[i] = "#{i+1},#{drink_names[i]},$#{get_cost(drink_names[i])},#{enough_inventory?(drink_names[i])}"
     end
     menu
   end
