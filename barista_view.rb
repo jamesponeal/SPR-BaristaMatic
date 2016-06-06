@@ -50,13 +50,13 @@ class BaristaView
 
   def display_drink_selection(drink_name)
     wait_with_line(0.1)
-    puts "Dispensing: \e[36m#{drink_name}\e[0m"
+    puts "Dispensing: #{drink_name}"
     wait_with_line(0.1)
   end
 
   def display_out_of_stock(drink_name)
     wait_with_line(0.1)
-    puts "Out of stock: \e[31m#{drink_name}\e[0m"
+    puts "Out of stock: #{drink_name}"
     wait_with_line(0.1)
   end
 

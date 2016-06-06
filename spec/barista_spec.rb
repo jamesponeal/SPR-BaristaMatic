@@ -55,7 +55,7 @@ describe "BaristaMatic" do
 
   describe "get_menu" do
     it "returns an array containing menu of available drinks" do
-      expect(barista.get_menu).to eq(["1,Coffee,$2.75,\e[32mtrue\e[0m", "2,Decaf Coffee,$2.75,\e[32mtrue\e[0m", "3,Caffe Latte,$2.55,\e[32mtrue\e[0m", "4,Caffe Americano,$3.30,\e[32mtrue\e[0m", "5,Caffe Mocha,$3.35,\e[32mtrue\e[0m", "6,Cappuccino,$2.90,\e[32mtrue\e[0m"])
+      expect(barista.get_menu).to eq(["1,Coffee,$2.75,true", "2,Decaf Coffee,$2.75,true", "3,Caffe Latte,$2.55,true", "4,Caffe Americano,$3.30,true", "5,Caffe Mocha,$3.35,true", "6,Cappuccino,$2.90,true"])
     end
   end
 
